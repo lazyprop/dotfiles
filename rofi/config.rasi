@@ -3,7 +3,7 @@ configuration {
     /*	width: 50;*/
     /*	lines: 15;*/
     /*	columns: 1;*/
-    	font: "mono 16";
+    	font: "mono 12";
     /*	bw: 1;*/
     /*	location: 0;*/
     /*	padding: 5;*/
@@ -25,7 +25,7 @@ configuration {
     /*	drun-show-actions: false;*/
     /*	drun-display-format: "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";*/
     /*	drun-url-launcher: "xdg-open";*/
-    /*	disable-history: false;*/
+    	disable-history: true;
     /*	ignored-prefixes: "";*/
     /*	sort: false;*/
     /*	sorting-method: "normal";*/
@@ -55,7 +55,7 @@ configuration {
     /*	window-format: "{w}    {c}   {t}";*/
     /*	click-to-exit: true;*/
     /*	show-match: true;*/
-    	theme: "arthur";
+    	theme: "base16-default-dark";
     /*	color-normal: ;*/
     /*	color-urgent: ;*/
     /*	color-active: ;*/

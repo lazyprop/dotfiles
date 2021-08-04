@@ -284,4 +284,13 @@ autocmd filetype asm nnoremap <Leader>mk :call CompileAsm()<CR><CR>
 """"""""""""""""""""""""""""""""""""""""
 " docs
 """"""""""""""""""""""""""""""""""""""""
-command! -nargs=1 Pydoc execute "new | read !pydoc" string(<q-args>)
+function! NewScratch()
+    new
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+    setlocal noswapfile
+endfunction
+
+command! -nargs=1 Pydoc exec "call NewScratch() | read !pydoc" string(<q-args>)
+
+autocmd filetype python set kp=:Pydoc
