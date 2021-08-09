@@ -4,11 +4,17 @@
 call plug#begin()
 
 Plug 'preservim/nerdtree'
-Plug 'vimwiki/vimwiki'
 Plug 'mbbill/undotree'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'christoomey/vim-tmux-navigator'
+
+" wiki
+Plug 'vimwiki/vimwiki'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'michal-h21/vim-zettel'
 
 " Writing
 Plug 'junegunn/goyo.vim'
@@ -19,15 +25,12 @@ Plug 'voldikss/vim-floaterm'
 Plug 'plasticboy/vim-markdown'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'jsborjesson/vim-uppercase-sql' " technically not a programming language
+Plug 'Olical/vim-scheme'
+Plug 'guns/vim-sexp'
  
 " asthetics
-Plug 'fxn/vim-monochrome' 
 Plug 'vim-scripts/wombat256.vim'
-Plug 'victorze/foo'
-Plug 'sheerun/vim-wombat-scheme'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'Jorengarenar/vim-darkness'
-Plug 'owickstrom/vim-colors-paramount'
+Plug 'chriskempson/base16-vim'
 
 call plug#end()
 
@@ -39,6 +42,7 @@ set wildignore=*.o,*.obj,*.bak,*.exe
 
 set relativenumber
 set number
+autocmd TermOpen * setlocal nonumber norelativenumber
 
 set encoding=UTF-8
 set noswapfile " swapfiles are unnecessary and a PITA
@@ -56,14 +60,15 @@ set nocompatible
 set splitright  " automatically open new split panes to right
 set splitbelow  " automatically open new split panes to below
 
-let mapleader = " "  " map leader to <Space>
-
 " disable auto comment on hitting enter
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 set undofile " enable saving undo history to a file
 set autochdir " set current directory to the file currently editing
 set autoread "  autoload file changes
+
+
+let mapleader = " "  " map leader to <Space>
 
 " use <Esc> to exit terminal mode
 tnoremap <Esc> <C-\><C-n>
@@ -74,22 +79,20 @@ tnoremap <C-h> <C-w>
 cnoremap <C-h> <C-w>
 
 " use <Leader>tt to toggle floating terminal
-nnoremap <Leader>tt :FloatermToggle<CR>
+nnoremap <S-t> :FloatermToggle<CR>
 
 " make Y consistent with C and D
 nnoremap Y y$
 
-set textwidth=80
+nnoremap <Leader>sv :source $MYVIMRC<CR>
 
 
 """"""""""""""""""""""""""""""""""""""""
 " movement
 """"""""""""""""""""""""""""""""""""""""
-" make J, K, L, and H move the cursor MORE.
-nnoremap J }
-"nnoremap K {
-nnoremap L $
-nnoremap H ^
+" make J, K move MORE
+nnoremap J <c-d>
+nnoremap K <c-u>
 
 " make <c-j>, <c-k>, <c-l>, and <c-h> scroll the screen.
 nnoremap <c-j> <c-e>
@@ -130,20 +133,24 @@ nnoremap <expr> , getcharsearch().forward ? ',' : ';'
 "   colorscheme
 """""""""""""""""""""""""""""""""""""""
 function! RemoveBg()
-    highlight clear CursorLine
-    highlight Normal ctermbg=none guibg=none
+    "highlight clear CursorLine
+    "highlight Normal ctermbg=none guibg=none
     highlight LineNr ctermbg=none guibg=none
-    highlight Folded ctermbg=none guibg=none
-    highlight NonText ctermbg=none guibg=none
-    highlight SpecialKey ctermbg=none guibg=none
-    highlight VertSplit ctermbg=none guibg=none
-    highlight SignColumn ctermbg=none guibg=none
+    "highlight Folded ctermbg=none guibg=none
+    "highlight NonText ctermbg=none guibg=none
+    "highlight SpecialKey ctermbg=none guibg=none
+    "highlight VertSplit ctermbg=none guibg=none
+    "highlight SignColumn ctermbg=none guibg=none
 endfunction
 
-autocmd ColorScheme * call RemoveBg()
+"autocmd ColorScheme * call RemoveBg()
 
-set termguicolors
-colorscheme wombat256mod
+"set termguicolors
+"set t_Co=256
+let NERDTreeHighlightCursorline=0
+"set cursorline
+
+colorscheme base16-default-dark
 
 
 """""""""""""""""""""""""""""""""""""""
@@ -162,11 +169,12 @@ noremap <C-n> :NERDTreeToggle<CR>
 "   vimwiki
 """"""""""""""""""""""""""""""""""""""""
 let g:vimwiki_list = [{
-            \ 'path': '~/documents/notes/',
+            \ 'path': '~/play/zettel',
             \ 'index': 'home',
             \ 'syntax': 'markdown',
             \ 'ext': '.md',
-            \ 'automatic_nexted_syntaxes': 1
+            \ 'automatic_nexted_syntaxes': 1,
+            \ 'auto_tags': 1
             \ }]
 
 " don't consider non vimwiki .md files .vimwiki files
@@ -236,6 +244,7 @@ augroup writing
     autocmd FileType vimwiki call pencil#init()
 augroup end
 
+
 """"""""""""""""""""""""""""""""""""""""
 " latex
 """"""""""""""""""""""""""""""""""""""""
@@ -245,17 +254,6 @@ endfunction
 
 autocmd filetype markdown,md,mkd nnoremap <Leader>mk :call ToPdf()<CR>
 
-""""""""""""""""""""""""""""""""""""""""
-" language
-""""""""""""""""""""""""""""""""""""""""
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ }
-
-" Automatically start language servers.
-let g:LanguageClient_autoStart = 1
-
-nnoremap <silent> <Leader>d :call LanguageClient_textDocument_hover()<CR>
 
 """"""""""""""""""""""""""""""""""""""""
 " completion
@@ -294,3 +292,10 @@ endfunction
 command! -nargs=1 Pydoc exec "call NewScratch() | read !pydoc" string(<q-args>)
 
 autocmd filetype python set kp=:Pydoc
+
+
+""""""""""""""""""""""""""""""""""""""""
+" vim-scheme
+""""""""""""""""""""""""""""""""""""""""
+let g:scheme_split_size=15
+let g:sexp_enable_insert_mode_mappings = 0
