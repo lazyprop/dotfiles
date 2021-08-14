@@ -5,7 +5,7 @@ export BROWSER="firefox"
 export READER="zathura"
 export VISUAL="nvim"
 export EDITOR="$VISUAL"
-export TERM="termite"
+#export TERM="termite"
 
 # ~/ cleanup
 export CARGO_HOME="$XDG_DATA_HOME/cargo"

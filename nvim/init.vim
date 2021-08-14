@@ -1,6 +1,3 @@
-"""""""""""""""""""""""""""""""""""""""
-"   Plugins
-"""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 
 Plug 'preservim/nerdtree'
@@ -8,114 +5,46 @@ Plug 'mbbill/undotree'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'christoomey/vim-tmux-navigator'
 
 " wiki
-Plug 'vimwiki/vimwiki'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'michal-h21/vim-zettel'
+"Plug 'vimwiki/vimwiki'
 
 " Writing
 Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-pencil'
-Plug 'voldikss/vim-floaterm'
 
 " Languages
 Plug 'plasticboy/vim-markdown'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'jsborjesson/vim-uppercase-sql' " technically not a programming language
-Plug 'Olical/vim-scheme'
 Plug 'guns/vim-sexp'
+Plug 'wlangstroth/vim-racket'
+Plug 'manicmaniac/coconut.vim'
  
 " asthetics
-Plug 'vim-scripts/wombat256.vim'
 Plug 'chriskempson/base16-vim'
+Plug 'itchyny/lightline.vim'
+Plug 'mike-hearn/base16-vim-lightline'
 
 call plug#end()
 
-"""""""""""""""""""""""""""""""""""""""
-"   general
-"""""""""""""""""""""""""""""""""""""""
-syntax enable
-set wildignore=*.o,*.obj,*.bak,*.exe
-
-set relativenumber
-set number
-autocmd TermOpen * setlocal nonumber norelativenumber
-
-set encoding=UTF-8
-set noswapfile " swapfiles are unnecessary and a PITA
-set nowrap
-
-filetype plugin indent on
-
-" indentation
-set autoindent " maintain current indentation when new line
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set nocompatible
-
-set splitright  " automatically open new split panes to right
-set splitbelow  " automatically open new split panes to below
-
-" disable auto comment on hitting enter
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
-set undofile " enable saving undo history to a file
-set autochdir " set current directory to the file currently editing
-set autoread "  autoload file changes
-
-
-let mapleader = " "  " map leader to <Space>
-
-" use <Esc> to exit terminal mode
-tnoremap <Esc> <C-\><C-n>
-
-" use ctrl+backspace to delete previous word
-inoremap <C-h> <C-w>
-tnoremap <C-h> <C-w>
-cnoremap <C-h> <C-w>
-
-" use <Leader>tt to toggle floating terminal
-nnoremap <S-t> :FloatermToggle<CR>
-
-" make Y consistent with C and D
-nnoremap Y y$
+source $HOME/.config/nvim/general.vim
+source $HOME/.config/nvim/movement.vim
+source $HOME/.config/nvim/asthetics.vim
+source $HOME/.config/nvim/writing.vim
 
 nnoremap <Leader>sv :source $MYVIMRC<CR>
-
-
-""""""""""""""""""""""""""""""""""""""""
-" movement
-""""""""""""""""""""""""""""""""""""""""
-" make J, K move MORE
-nnoremap J <c-d>
-nnoremap K <c-u>
-
-" make <c-j>, <c-k>, <c-l>, and <c-h> scroll the screen.
-nnoremap <c-j> <c-e>
-nnoremap <c-k> <c-y>
-nnoremap <c-l> zl
-nnoremap <c-h> zh
-
-" make <a-j>, <a-k>, <a-l>, and <a-h> move to window.
-nnoremap <a-j> <c-w>j
-nnoremap <a-k> <c-w>k
-nnoremap <a-l> <c-w>l
-nnoremap <a-h> <c-w>h
 
 """""""""""""""""""
 " search
 """""""""""""""""""
-set showcmd " Show (partial) command in status line.
-set noshowmatch " Show matching brackets.
-set ignorecase " Do case insensitive matching
-"set smartcase› › " Do smart case matching
-set incsearch " Incremental search
-"set autowrite› › " Automatically save before commands like :next and :make
-"set hidden›› " Hide buffers when they are abandoned
+set showcmd         " Show (partial) command in status line.
+set noshowmatch     " Show matching brackets.
+set ignorecase      " Do case insensitive matching
+"set smartcase› ›   " Do smart case matching
+set incsearch       " Incremental search
+"set autowrite› ›   " Automatically save before commands like :next and :make
+"set hidden››       " Hide buffers when they are abandoned
 set mouse=a
 set hlsearch
 
@@ -128,58 +57,6 @@ nnoremap <expr> N 'nN'[v:searchforward]
 " make ; always find forward and , backward
 nnoremap <expr> ; getcharsearch().forward ? ';' : ','
 nnoremap <expr> , getcharsearch().forward ? ',' : ';'
-
-"""""""""""""""""""""""""""""""""""""""
-"   colorscheme
-"""""""""""""""""""""""""""""""""""""""
-function! RemoveBg()
-    "highlight clear CursorLine
-    "highlight Normal ctermbg=none guibg=none
-    highlight LineNr ctermbg=none guibg=none
-    "highlight Folded ctermbg=none guibg=none
-    "highlight NonText ctermbg=none guibg=none
-    "highlight SpecialKey ctermbg=none guibg=none
-    "highlight VertSplit ctermbg=none guibg=none
-    "highlight SignColumn ctermbg=none guibg=none
-endfunction
-
-"autocmd ColorScheme * call RemoveBg()
-
-"set termguicolors
-"set t_Co=256
-let NERDTreeHighlightCursorline=0
-"set cursorline
-
-colorscheme base16-default-dark
-
-
-"""""""""""""""""""""""""""""""""""""""
-"   statusline (lightline)
-"""""""""""""""""""""""""""""""""""""""
-" disable statusline. statuslines are unnecessary
-set laststatus=0
-
-"""""""""""""""""""""""""""""""""""""""
-"   nerdtree
-"""""""""""""""""""""""""""""""""""""""
-noremap <C-n> :NERDTreeToggle<CR>
-
-
-""""""""""""""""""""""""""""""""""""""""
-"   vimwiki
-""""""""""""""""""""""""""""""""""""""""
-let g:vimwiki_list = [{
-            \ 'path': '~/play/zettel',
-            \ 'index': 'home',
-            \ 'syntax': 'markdown',
-            \ 'ext': '.md',
-            \ 'automatic_nexted_syntaxes': 1,
-            \ 'auto_tags': 1
-            \ }]
-
-" don't consider non vimwiki .md files .vimwiki files
-"let g:vimwiki_global_ext = 0 
-
 
 """"""""""""""""""""""""""""""""""""""""
 "   competitive programming
@@ -203,95 +80,6 @@ endfunction
 autocmd filetype cpp nnoremap <Leader>cp :call InitCP()<CR>
 autocmd filetype cpp nnoremap <Leader>io :call InitIO()<CR>
 autocmd filetype cpp nnoremap <Leader>mk :w<bar> call AutoTest()<CR>
-
-
-""""""""""""""""""""""""""""""""""""""""
-" vim markdown
-""""""""""""""""""""""""""""""""""""""""
-let g:vim_markdown_folding_disabled = 1 " disable folding
-let g:vim_markdown_strikethrough = 1    " use ~~ to strikethrough
-" disable automatic indentation when inserting new list item
-let g:vim_markdown_new_list_item_indent = 0
-let g:vim_markdown_auto_insert_bullets = 1
-
-let g:vim_markdown_math = 1 " enable LaTeX math
-
-
-""""""""""""""""""""""""""""""""""""""""
-" vim startify
-""""""""""""""""""""""""""""""""""""""""
-nnoremap <Leader>st :Startify<CR>
-let g:startify_bookmarks = [
-            \ '~/.config/nvim/',
-            \ '~/play/',
-            \ '~/play/competitive/',
-            \ '~/notes/'
-            \]
-
-let g:startify_lists = [
-            \ {'type': 'bookmarks' , 'header': ['Bookmarks']}
-            \]
-
-""""""""""""""""""""""""""""""""""""""""
-" writing
-""""""""""""""""""""""""""""""""""""""""
-let g:pencil#wrapModeDefault = 'soft'
-let g:pencil#cursorwrap = 0
-augroup writing
-    autocmd!
-    autocmd FileType markdown,md,mkd call pencil#init()
-    autocmd FileType text,txt call pencil#init()
-    autocmd FileType vimwiki call pencil#init()
-augroup end
-
-
-""""""""""""""""""""""""""""""""""""""""
-" latex
-""""""""""""""""""""""""""""""""""""""""
-function! ToPdf()
-    exec "!pandoc -s -f markdown -t html -c style.css -o output.pdf ".shellescape("%")
-endfunction
-
-autocmd filetype markdown,md,mkd nnoremap <Leader>mk :call ToPdf()<CR>
-
-
-""""""""""""""""""""""""""""""""""""""""
-" completion
-""""""""""""""""""""""""""""""""""""""""
-function! Tab_Or_Complete()
-  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-    return "\<C-N>"
-  else
-    return "\<Tab>"
-  endif
-endfunction
-
-inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
-inoremap <s-Tab> <C-P>
-
-""""""""""""""""""""""""""""""""""""""""
-" assembly
-""""""""""""""""""""""""""""""""""""""""
-function! CompileAsm()
-    exec "!gcc -S -fverbose-asm  -fno-stack-protector test.c"
-endfunction
-
-autocmd filetype asm nnoremap <Leader>mk :call CompileAsm()<CR><CR>
-
-
-""""""""""""""""""""""""""""""""""""""""
-" docs
-""""""""""""""""""""""""""""""""""""""""
-function! NewScratch()
-    new
-    setlocal buftype=nofile
-    setlocal bufhidden=hide
-    setlocal noswapfile
-endfunction
-
-command! -nargs=1 Pydoc exec "call NewScratch() | read !pydoc" string(<q-args>)
-
-autocmd filetype python set kp=:Pydoc
 
 
 """"""""""""""""""""""""""""""""""""""""
