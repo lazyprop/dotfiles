@@ -28,10 +28,10 @@ Plug 'mike-hearn/base16-vim-lightline'
 
 call plug#end()
 
-source $HOME/.config/nvim/general.vim
-source $HOME/.config/nvim/movement.vim
-source $HOME/.config/nvim/asthetics.vim
-source $HOME/.config/nvim/writing.vim
+source $XDG_CONFIG_HOME/nvim/general.vim
+source $XDG_CONFIG_HOME/nvim/movement.vim
+source $XDG_CONFIG_HOME/nvim/asthetics.vim
+source $XDG_CONFIG_HOME/nvim/writing.vim
 
 nnoremap <Leader>sv :source $MYVIMRC<CR>
 
