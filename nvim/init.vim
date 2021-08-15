@@ -5,6 +5,7 @@ Plug 'mbbill/undotree'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'christoomey/vim-tmux-navigator'
 
 " wiki
 "Plug 'vimwiki/vimwiki'
@@ -57,6 +58,10 @@ nnoremap <expr> N 'nN'[v:searchforward]
 " make ; always find forward and , backward
 nnoremap <expr> ; getcharsearch().forward ? ';' : ','
 nnoremap <expr> , getcharsearch().forward ? ',' : ';'
+
+
+" use tmux prefix for vim
+"nnoremap <C-Space> <C-w>
 
 """"""""""""""""""""""""""""""""""""""""
 "   competitive programming
