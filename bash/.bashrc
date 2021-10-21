@@ -13,23 +13,29 @@ alias r='ranger'
 alias qs='scheme --quiet < '
 alias du='du -h'
 
-alias dots="~/dotfiles"
-alias ttrv="ttrv --enable-media"
+#alias dots="~/dotfiles"
+#alias ttrv="ttrv --enable-media"
 
 #eval "$(thefuck --alias)"
 
 # replace coreutils with rust alternatives
-#alias cat="bat"
-#alias ls="exa"
-#alias find="fd"
-#alias grep="rg"
-#alias rm="trash"
+alias cat="bat"
+alias ls="exa"
+alias find="fd"
+alias grep="rg"
+alias rm="trash"
+
+alias py="python"
+alias ghc="ghc -no-keep-hi-files -no-keep-o-files"
+
 
 # map ctrl+bksp to delete previous word
 # stty werase undef
 bind '"\b":backward-kill-word'
-alias cp="/usr/local/bin/advcp -g -r"
-alias mv="/usr/local/bin/advmv -g"
+
+# advcpmv
+alias cp="advcp -g -r"
+alias mv="advmv -g"
 
 alias sshsync="rsync -av --progress -e 'ssh -p 2222'"
 
@@ -37,3 +43,18 @@ alias sshsync="rsync -av --progress -e 'ssh -p 2222'"
 alias wget="wget --hsts-file='$XDG_CACHE_HOME/wget-hsts'"
 
 export MANPAGER='nvim +Man!'
+
+alias vi="nvim"
+. "$CARGO_HOME/env"
+
+alias t="tmux"
+alias ta="tmux attach"
+
+mkcd ()
+{
+    mkdir -p -- "$1" &&
+      cd -P -- "$1"
+}
+
+export PATH=~/.config/pdsite/bin:$PATH
+alias bye="shutdown now"

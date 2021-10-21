@@ -14,8 +14,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-agenda-files '("~/Documents/agenda.org"))
  '(package-selected-packages
-   '(racket-mode paredit evil-collection auto-complete dashboard which-key rust-mode ranger xkcd base16-theme evil)))
+   '(aggressive-indent haskell-mode proof-general vterm racket-mode paredit evil-collection auto-complete dashboard which-key rust-mode ranger xkcd base16-theme evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -46,7 +47,7 @@
 (global-display-line-numbers-mode t)
 ;;(add-hook 'text-mode-hook (lambda () (display-line-numbers-mode 1)))
 
-(setq default-frame-alist '((font . "Source Code Pro-12")))
+(setq default-frame-alist '((font . "Source Code Pro-14")))
 
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 
@@ -85,7 +86,7 @@
 
 (setq ring-bell-function 'ignore)
 
-(setq indent-tabs-mode nil)
+;(setq indent-tabs-mode nil)
 (setq tab-width 4)
 (setq indent-line-function 'insert-tab)
 
@@ -108,3 +109,10 @@
 (add-hook 'paredit-mode-hook
 	  (lambda ()
 	    (local-set-key (kbd "C-9") 'paredit-backward-slurp-sexp)))
+
+;; disable autoindentation
+;(when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
+
+
+;;; Haskelling
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)

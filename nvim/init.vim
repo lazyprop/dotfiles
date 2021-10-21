@@ -2,30 +2,39 @@ call plug#begin()
 
 Plug 'preservim/nerdtree'
 Plug 'mbbill/undotree'
-Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'kevinhwang91/rnvimr'
+Plug 'soywod/himalaya', {'rtp': 'vim'}
+Plug 'sirver/ultisnips'
 
 " wiki
 "Plug 'vimwiki/vimwiki'
+Plug 'vhyrro/neorg' | Plug 'nvim-lua/plenary.nvim'
+Plug 'hrsh7th/nvim-compe'
 
-" Writing
+" writing
 Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-pencil'
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'lervag/vimtex'
 
-" Languages
+" languages
 Plug 'plasticboy/vim-markdown'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'jsborjesson/vim-uppercase-sql' " technically not a programming language
 Plug 'guns/vim-sexp'
 Plug 'wlangstroth/vim-racket'
 Plug 'manicmaniac/coconut.vim'
+Plug 'whonore/Coqtail'
  
 " asthetics
 Plug 'chriskempson/base16-vim'
 Plug 'itchyny/lightline.vim'
 Plug 'mike-hearn/base16-vim-lightline'
+Plug 'mhinz/vim-startify'
+
 
 call plug#end()
 
@@ -92,3 +101,9 @@ autocmd filetype cpp nnoremap <Leader>mk :w<bar> call AutoTest()<CR>
 """"""""""""""""""""""""""""""""""""""""
 let g:scheme_split_size=15
 let g:sexp_enable_insert_mode_mappings = 0
+
+""""""""""""""""""""""""""""""""""""""""
+" haskell
+""""""""""""""""""""""""""""""""""""""""
+let g:haskell_indent_where = 4
+let g:haskell_indent_before_where = 2
