@@ -29,5 +29,8 @@ export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export PATH=~/.local/bin:$PATH
 export PATH=~/.dotnet:$PATH
 
-startx $XINITRC
 . "$CARGO_HOME/env"
+
+if [ -e /home/iv/.nix-profile/etc/profile.d/nix.sh ]; then . /home/iv/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# startx $XINITRC

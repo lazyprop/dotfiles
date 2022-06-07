@@ -7,31 +7,31 @@ colors:
     foreground: '0xd8d8d8'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
-  cursor:
-    text: '0x181818'
-    cursor: '0xd8d8d8'
+  #cursor:
+  #text: '0x181818'
+  #cursor: '0xd8d8d8'
 
   # Normal colors
-  normal:
-    black:   '0x181818'
-    red:     '0xab4642'
-    green:   '0xa1b56c'
-    yellow:  '0xf7ca88'
-    blue:    '0x7cafc2'
-    magenta: '0xba8baf'
-    cyan:    '0x86c1b9'
-    white:   '0xd8d8d8'
+  #normal:
+  #black:   '0x181818'
+  #red:     '0xab4642'
+  #green:   '0xa1b56c'
+  #yellow:  '0xf7ca88'
+  #blue:    '0x7cafc2'
+  #magenta: '0xba8baf'
+  #cyan:    '0x86c1b9'
+  #white:   '0xd8d8d8'
 
   # Bright colors
-  bright:
-    black:   '0x585858'
-    red:     '0xdc9656'
-    green:   '0x282828'
-    yellow:  '0x383838'
-    blue:    '0xb8b8b8'
-    magenta: '0xe8e8e8'
-    cyan:    '0xa16946'
-    white:   '0xf8f8f8'
+  #bright:
+  #black:   '0x585858'
+  #red:     '0xdc9656'
+  #green:   '0x282828'
+  #yellow:  '0x383838'
+  #blue:    '0xb8b8b8'
+  #magenta: '0xe8e8e8'
+  #cyan:    '0xa16946'
+  #white:   '0xf8f8f8'
 
 draw_bold_text_with_bright_colors: false
 
@@ -134,7 +134,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: Source Code Pro
+    family: monospace
 
     # The `style` can be specified to pick a specific face.
     #style: Regular
@@ -173,7 +173,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 14
+  size: 8
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -348,7 +348,7 @@ font:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.9
+window.opacity: 1
 
 #selection:
   #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
@@ -622,7 +622,7 @@ background_opacity: 0.9
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
 key_bindings:
-  - { key: Return,   mods: Control|Shift, action: SpawnNewInstance }
+  #- { key: Return,   mods: Control|Shift, action: SpawnNewInstance }
   #- { key: Paste,                                action: Paste          }
   #- { key: Copy,                                 action: Copy           }
   #- { key: L,         mods: Control,             action: ClearLogNotice }
