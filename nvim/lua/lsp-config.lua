@@ -1,13 +1,14 @@
 local lsp_handler = require('handlers')
 lsp_handler.setup()
 
-require('lspconfig').hls.setup{
-    cmd = {
-        "/home/iv/play/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-8.10.7/haskell-language-server-1.6.1.1/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
-        "--lsp"
-    },
-    on_attach = lsp_handler.on_attach
-}
+
+--require('lspconfig').hls.setup{
+    --cmd = {
+        --"/home/iv/play/haskell-language-server/dist-newstyle/build/x86_64-linux/ghc-8.10.7/haskell-language-server-1.6.1.1/x/haskell-language-server/build/haskell-language-server/haskell-language-server",
+        --"--lsp"
+    --},
+    --on_attach = lsp_handler.on_attach
+--}
 
 
 -- completion

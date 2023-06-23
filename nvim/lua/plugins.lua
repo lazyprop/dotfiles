@@ -34,6 +34,7 @@ return require('packer').startup(function()
     -- Utils
     use 'christoomey/vim-tmux-navigator'
     use 'nvim-lua/plenary.nvim'
+    use 'editorconfig/editorconfig-vim'
     use 'preservim/nerdtree'
 
     -- Aesthetics
@@ -63,6 +64,8 @@ return require('packer').startup(function()
     use 'lervag/vimtex'
     use 'xuhdev/vim-latex-live-preview'
     use 'neovimhaskell/haskell-vim'
+    use 'preservim/vim-markdown'
+    use 'clojure-vim/clojure.vim'
 
 
     -- LSP and Completion

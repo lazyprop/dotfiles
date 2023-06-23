@@ -4,7 +4,7 @@ require 'nvim-tree'
 
 require 'utils'
 require 'aesthetics'
-require 'lsp-config'
+--require 'lsp-config'
 
 local options = {
     autochdir = true,
