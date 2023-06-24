@@ -1,7 +1,7 @@
 import XMonad
 
 import XMonad.Hooks.ManageDocks (docks, avoidStruts)
-import XMonad.Hooks.ManageHelpers (doCenterFloat)
+import XMonad.Hooks.ManageHelpers (doCenterFloat, isDialog)
 import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
 import XMonad.Hooks.Place (placeHook, simpleSmart)
 
@@ -21,6 +21,7 @@ main = xmonad
 myModMask :: KeyMask
 myModMask = mod4Mask
 
+-- TODO look up the type for this and add it (for aesthetic purposes)
 myConfig = def
     { modMask    = myModMask
     , layoutHook = avoidStruts $ layoutHook def
@@ -43,6 +44,13 @@ myStartupHook = do
 
 myManageHook :: ManageHook
 myManageHook = composeAll
-                [ className =? "Nitrogen"       --> doFloat
-                , className =? "Pavucontrol"    --> doCenterFloat
+                [ className =? "Nitrogen"           --> doFloat
+                , className =? "Pavucontrol"        --> doCenterFloat
+                , className =? "Blueman-manager"    --> doCenterFloat
+
+                -- firefox bookmarks toolbar
+                , (className =? "firefox" <&&>
+                    resource =? "Places")           --> doCenterFloat
+
+                , isDialog                          --> doCenterFloat
                 ]
