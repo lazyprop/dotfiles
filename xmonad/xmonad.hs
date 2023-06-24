@@ -5,7 +5,8 @@ import XMonad.Hooks.ManageHelpers (doCenterFloat, isDialog)
 import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
 import XMonad.Hooks.Place (placeHook, simpleSmart)
 
-import XMonad.Util.EZConfig (additionalKeys)
+import XMonad.Util.EZConfig (additionalKeys, additionalKeysP)
+import XMonad.Util.NamedActions (addName)
 
 import Data.Map (Map, fromList)
 import qualified Data.Map as Map
@@ -29,13 +30,22 @@ myConfig = def
     , manageHook = myManageHook <> manageHook def
     , terminal = "alacritty"
     , workspaces = ["1", "2", "3", "4"]
-    } `additionalKeys` myKeys
+    } `additionalKeys` myKeys `additionalKeysP` myMediaKeys
 
+
+-- TODO migrate to namedactions for keys
 
 myKeys :: [((ButtonMask, KeySym), X ())]
 myKeys = [ ((myModMask, xK_r), spawn "rofi -show drun")
          , ((myModMask, xK_p), spawn "rofi -show run")
          ]
+
+myMediaKeys :: [(String, X ())]
+myMediaKeys = 
+    [ ("<XF86AudioMute>", spawn "pulseaudio-ctl mute")
+    , ("<XF86AudioLowerVolume>", spawn "pulseaudio-ctl down")
+    , ("<XF86AudioRaiseVolume>", spawn "pulseaudio-ctl up")
+    ]
 
 myStartupHook :: X ()
 myStartupHook = do
