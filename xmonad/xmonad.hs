@@ -45,6 +45,7 @@ myMediaKeys =
     [ ("<XF86AudioMute>", spawn "pulseaudio-ctl mute")
     , ("<XF86AudioLowerVolume>", spawn "pulseaudio-ctl down")
     , ("<XF86AudioRaiseVolume>", spawn "pulseaudio-ctl up")
+    , ("<XF86AudioMicMute>", spawn "pulseaudio-ctl mute-input")
     ]
 
 myStartupHook :: X ()

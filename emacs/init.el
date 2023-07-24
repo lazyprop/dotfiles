@@ -1,22 +1,16 @@
-(setq default-directory "~/")
-
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 
-(add-to-list 'package-archives
-	      '("melpa" . "https://melpa.org/packages/")
-	      t)
-
-(package-initialize)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files '("~/Documents/agenda.org"))
+ '(custom-safe-themes
+   '("4320a92406c5015e8cba1e581a88f058765f7400cf5d885a3aa9b7b9fc448fa7" default))
  '(package-selected-packages
-   '(aggressive-indent haskell-mode proof-general vterm racket-mode paredit evil-collection auto-complete dashboard which-key rust-mode ranger xkcd base16-theme evil)))
+   '(doom-themes modus-themes cuda-mode neuron-mode dired-x vterm evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -24,95 +18,89 @@
  ;; If there is more than one, they won't work right.
  )
 
-;; evil
-(setq evil-want-C-u-scroll t)
-(setq evil-want-keybinding nil)
-(evil-collection-init)
-
-(require 'evil)
-(evil-mode 1)
-
-
-(load-theme 'base16-default-dark t)
-
-;; disable useless things
+;; Turn off some unneeded UI elements
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(blink-cursor-mode -1)
+(blink-cursor-mode 0)
 (setq make-backup-files nil)
-
-;; line numbers
-(setq display-line-numbers-type 'relative)
-(global-display-line-numbers-mode t)
-;;(add-hook 'text-mode-hook (lambda () (display-line-numbers-mode 1)))
-
-(setq default-frame-alist '((font . "Source Code Pro-14")))
-
-(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-
-(defun start-cmd () (interactive)
-       (let
-	   ((proc
-	     (start-process
-	      "cmd" nil "cmd.exe"
-	      "/C" "start" "cmd.exe")))
-
-	 (set-process-query-on-exit-flag proc nil)))
+(setq display-line-numbers 'relative)
 
 
-(require 'rust-mode)
-;(add-hook 'rust-mode-hook (lambda () (setq indent-tabs-mode nil)))
+(add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode)))
+(add-hook 'text-mode-hook (lambda () (display-line-numbers-mode)))
+
+(require 'dired-x)
+(setq dired-omit-files "^\\...+$")
+(add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
+
+(set-frame-font "Source Code Pro 14" nil t)
+
+(use-package linum-relative
+  :ensure t
+  
+  :config
+  ;(add-hook 'prog-mode-hook 'linum-on)
+  ;(add-hook 'text-mode-hook 'linum-on)
+  )
+
+(use-package evil
+  :ensure t
+
+  :init
+  (setq evil-want-keybinding nil)
+
+  :custom
+  (evil-want-C-u-scroll t)
+
+  :config
+  (evil-mode 1))
 
 
-(require 'which-key)
-(which-key-mode)
+(use-package evil-collection
+  :after evil
 
-(require 'dashboard)
-(dashboard-setup-startup-hook)
-
-;; auto complete
-(ac-config-default)
-(ac-set-trigger-key "TAB")
-(setq ac-auto-start nil)
-
-(add-to-list 'ac-modes 'rust-mode)
-(add-to-list 'ac-modes 'racket-mode)
-(add-to-list 'ac-modes 'racket-repl-mode)
+  :config
+  (evil-collection-init))
 
 
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-(add-hook 'text-mode-hook (lambda () (set-fill-column 80)))
+(use-package base16-theme
+  :ensure t
+  :config
+  ;(load-theme 'base16-default-dark t)
+  )
 
-(setq ring-bell-function 'ignore)
+(use-package modus-themes
+  :ensure t
+  :config
+  ;(load-theme 'modus-operandi)
+  )
 
-;(setq indent-tabs-mode nil)
-(setq tab-width 4)
-(setq indent-line-function 'insert-tab)
+(use-package doom-themes
+  :ensure t
+  :config
+  (load-theme 'doom-one-light t)
+  )
 
-;;;; Lisping
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
 
-;; enable paredit on lisp modes
-(autoload 'enable-paredit-mode "paredit" t)
-(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
-(add-hook 'racket-mode-hook           #'enable-paredit-mode)
+(use-package vterm
+  :ensure t
 
-(add-hook 'paredit-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-0") 'paredit-forward-slurp-sexp)))
+  :config
+  (add-hook 'vterm-mode-hook 'turn-off-evil-mode)
+  ;(add-hook 'vterm-mode-hook (lambda () (linum-mode 0)))
+  )
 
-(add-hook 'paredit-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-9") 'paredit-backward-slurp-sexp)))
+(use-package neuron-mode
+  :ensure t)
 
-;; disable autoindentation
-;(when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
+(use-package cuda-mode
+  :ensure t)
 
-
-;;; Haskelling
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+(defun reload-config ()
+  (interactive)
+  (load-file "~/.config/emacs/init.el"))
