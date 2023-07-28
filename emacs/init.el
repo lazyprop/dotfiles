@@ -10,7 +10,7 @@
  '(custom-safe-themes
    '("4320a92406c5015e8cba1e581a88f058765f7400cf5d885a3aa9b7b9fc448fa7" default))
  '(package-selected-packages
-   '(undo-tree use-package perspective neuron-mode multi-vterm modus-themes linum-relative evil-collection doom-themes dashboard cuda-mode base16-theme)))
+   '(paredit ivy flx undo-tree use-package perspective neuron-mode multi-vterm modus-themes linum-relative evil-collection doom-themes dashboard cuda-mode base16-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -29,18 +29,19 @@
 (setq-default display-line-type 'relative)
 (setq-default inhibit-startup-message t) 
 (setq-default initial-scratch-message nil)
-(setq-default indent-tabs-mode nil)
 (setq-default display-fill-column-indicator-column 80)
 (setq-default truncate-lines t)
-(setq-default undo-tree-history-directory-alist '(("." . "~/.config/emacs/undo")))
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+;(setq indent-line-function 'insert-tab)
+
+(set-frame-font "Source Code Pro 14" nil t)
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'display-line-numbers-mode)
 
 (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
 (add-hook 'text-mode-hook 'display-fill-column-indicator-mode)
-
-(set-frame-font "Source Code Pro 14" nil t)
 
 (defun reload-config ()
   (interactive)
@@ -49,6 +50,8 @@
 (use-package dired
   :ensure nil
   :commands (dired dired-jump)
+  :custom
+  (dired-kill-when-opening-new-dired-buffer t)
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "h" 'dired-up-directory
@@ -80,8 +83,7 @@
 (use-package modus-themes
   :ensure t
   :config
-  (load-theme 'modus-operandi)
-  )
+  (load-theme 'modus-operandi))
 
 (use-package doom-themes
   :ensure t
@@ -127,5 +129,29 @@
 
 (use-package undo-tree
   :ensure t
+  :custom
+  (undo-tree-history-directory-alist '(("." . "~/.config/emacs/undo")))
   :config
   (global-undo-tree-mode))
+
+(use-package flx
+  :ensure t)
+
+(use-package ivy
+  :ensure t
+  :custom
+  (ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+  :config
+  (ivy-mode 1)
+  )
+
+(use-package paredit
+  :ensure t
+  :config
+  (add-hook 'emacs-lisp-mode-hook                  'enable-paredit-mode)
+  (add-hook 'eval-expression-minibuffer-setup-hook 'enable-paredit-mode)
+  (add-hook 'ielm-mode-hook                        'enable-paredit-mode)
+  (add-hook 'lisp-mode-hook                        'enable-paredit-mode)
+  (add-hook 'lisp-interaction-mode-hook            'enable-paredit-mode)
+  (add-hook 'scheme-mode-hook                      'enable-paredit-mode)
+  )
