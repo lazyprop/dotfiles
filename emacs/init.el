@@ -8,9 +8,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("4320a92406c5015e8cba1e581a88f058765f7400cf5d885a3aa9b7b9fc448fa7" default))
+   '("f700bc979515153bef7a52ca46a62c0aa519950cc06d539df4f3d38828944a2c" "47610f9d6af7e30fbfb52fffe6de4c7de299792a7f0d09192a5b2b593c18931b" "eb50f36ed5141c3f702f59baa1968494dc8e9bd22ed99d2aaa536c613c8782db" "dedd42edff4429616c6a2072861066d685ff12ec132b2e97fdfd5361b9aacdae" "e071222c11229ae5719a78ad27c6bd55371a546aef5cfe43b747128fea90faeb" "4320a92406c5015e8cba1e581a88f058765f7400cf5d885a3aa9b7b9fc448fa7" default))
  '(package-selected-packages
-   '(paredit ivy flx undo-tree use-package perspective neuron-mode multi-vterm modus-themes linum-relative evil-collection doom-themes dashboard cuda-mode base16-theme)))
+   '(haskell-mode which-key org org-roam ivy flx undo-tree use-package perspective neuron-mode multi-vterm modus-themes evil-collection doom-themes cuda-mode base16-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -35,6 +35,10 @@
 (setq-default tab-width 4)
 ;(setq indent-line-function 'insert-tab)
 
+(define-key global-map (kbd "C-<return>") 'my-compile)
+(setq-default compile-command "make -B")
+
+
 (set-frame-font "Source Code Pro 14" nil t)
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
@@ -47,17 +51,24 @@
   (interactive)
   (load-file "~/.config/emacs/init.el"))
 
+(defun my-compile ()
+  "Choose an appropriate compilation function based on current major mode."
+  (interactive)
+  (call-interactively
+   (cond ((eq major-mode 'latex-mode) 'tex-compile)
+         (t 'compile))))
+
 (use-package dired
   :ensure nil
   :commands (dired dired-jump)
   :custom
   (dired-kill-when-opening-new-dired-buffer t)
+  (dired-listing-switches "-alh")
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "h" 'dired-up-directory
     "l" 'dired-find-file
-    "H" 'dired-omit-mode)
-  )
+    "H" 'dired-omit-mode))
 
 (use-package evil
   :ensure t
@@ -75,10 +86,7 @@
   (evil-collection-init))
 
 (use-package base16-theme
-  :ensure t
-  :config
-  ;(load-theme 'base16-default-dark t)
-  )
+  :ensure nil)
 
 (use-package modus-themes
   :ensure t
@@ -86,23 +94,12 @@
   (load-theme 'modus-operandi))
 
 (use-package doom-themes
-  :ensure t
-  :config
-  ;(load-theme 'doom-one-light t)
-  )
-
-(use-package dashboard
-  :ensure t
-  ;:config
-  ;(dashboard-setup-startup-hook)
-  )
+  :ensure t)
 
 (use-package vterm
   :ensure t
   :config
-  (add-hook 'vterm-mode-hook 'turn-off-evil-mode)
-  ;(add-hook 'vterm-mode-hook (lambda () (linum-mode 0)))
-  )
+  (add-hook 'vterm-mode-hook 'turn-off-evil-mode))
 
 (use-package neuron-mode
   :ensure t)
@@ -110,12 +107,10 @@
 (use-package cuda-mode
   :ensure t
   :config
-  (add-hook 'cuda-mode-hook 'display-line-numbers-mode)
-  )
+  (add-hook 'cuda-mode-hook 'display-line-numbers-mode))
 
 (use-package multi-vterm
-  :ensure t
-  )
+  :ensure t)
 
 (use-package perspective
   :ensure t
@@ -124,8 +119,7 @@
   :custom
   (persp-mode-prefix-key (kbd "C-SPC"))
   :init
-  (persp-mode)
-  )
+  (persp-mode))
 
 (use-package undo-tree
   :ensure t
@@ -142,16 +136,29 @@
   :custom
   (ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
   :config
-  (ivy-mode 1)
-  )
+  (ivy-mode 1))
 
-(use-package paredit
-  :ensure t
-  :config
-  (add-hook 'emacs-lisp-mode-hook                  'enable-paredit-mode)
-  (add-hook 'eval-expression-minibuffer-setup-hook 'enable-paredit-mode)
-  (add-hook 'ielm-mode-hook                        'enable-paredit-mode)
-  (add-hook 'lisp-mode-hook                        'enable-paredit-mode)
-  (add-hook 'lisp-interaction-mode-hook            'enable-paredit-mode)
-  (add-hook 'scheme-mode-hook                      'enable-paredit-mode)
-  )
+;(use-package paredit
+;  :ensure nil
+;  :hook
+;  ((emacs-lisp-mode                  paredit-mode)
+;   (eval-expression-minibuffer-setup paredit-mode)
+;   (ielm-mode                        paredit-mode)
+;   (lisp-mode                        paredit-mode)
+;   (lisp-interaction-mode            paredit-mode)
+;   (scheme-mode                      paredit-mode)))
+
+(use-package org
+  :ensure t)
+
+(use-package org-roam
+  :after org
+  :custom
+  (org-roam-directory (file-truename "~/roam")))
+
+
+(use-package which-key
+  :ensure t)
+
+(use-package haskell-mode
+  :ensure t)
