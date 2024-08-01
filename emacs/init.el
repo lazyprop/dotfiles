@@ -30,15 +30,19 @@
 (setq-default display-fill-column-indicator-column 80)
 (setq-default truncate-lines t)
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
+(setq-default tab-width 2)
 (setq-default fill-column 80)
+(setq-default frame-resize-pixelwise t)
 ;(setq indent-line-function 'insert-tab)
 
 (define-key global-map (kbd "C-<return>") 'my-compile)
 (setq-default compile-command "make -B")
 
 
-(set-frame-font "Source Code Pro 12" nil t)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . prog-mode))
+
+
+(set-frame-font "Source Code Pro 13" nil t)
 
 (setq display-line-numbers-type 'relative) 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
@@ -50,13 +54,6 @@
 (defun reload-config ()
   (interactive)
   (load-file "~/.config/emacs/init.el"))
-
-(defun my-compile ()
-  "Choose an appropriate compilation function based on current major mode."
-  (interactive)
-  (call-interactively
-   (cond ((eq major-mode 'latex-mode) 'tex-compile)
-         (t 'compile))))
 
 (use-package dired
   :ensure nil
@@ -86,15 +83,9 @@
   :config
   (evil-collection-init))
 
-(use-package base16-theme
-  :ensure t)
-
 (use-package modus-themes
   :ensure t
   :config)
-
-(use-package doom-themes
-  :ensure t)
 
 (use-package vterm
   :ensure t
@@ -132,25 +123,12 @@
   (evil-set-undo-system 'undo-tree)
   (global-undo-tree-mode 1))
 
-(use-package flx
-  :ensure t)
-
 (use-package ivy
   :ensure t
   :custom
   (ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
   :config
   (ivy-mode 1))
-
-(use-package org
-  :ensure t)
-
-(use-package org-roam
-  :after org
-  :ensure t
-  :custom
-  (org-roam-directory (file-truename "~/roam")))
-
 
 (use-package which-key
   :ensure t
@@ -168,11 +146,8 @@
   :bind (("C-x g" . magit-status)
          ("C-x C-g" . magit-status)))
 
-(use-package w3m
-  :ensure t)
-
 ;(load-theme 'base16-seti)
-(load-theme 'modus-operandi)
+(load-theme 'modus-vivendi)
 (c-set-offset 'innamespace '0)
 
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
