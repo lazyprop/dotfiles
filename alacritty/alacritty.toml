@@ -1,0 +1,16 @@
+
+[env]
+term = "xterm-256color"
+
+[colors.primary]
+background = "0x000000"
+foreground = "0xFFFFFF"
+
+[window]
+opacity = 0.92
+
+[font]
+normal.family = "Source Code Pro"
+normal.style = "Regular"
+size = 8
+
