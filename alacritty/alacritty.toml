@@ -1,3 +1,7 @@
+[general]
+import = [
+    "~/.config/alacritty/themes/themes/xterm.toml"
+]
 
 [env]
 term = "xterm-256color"
