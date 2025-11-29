@@ -182,7 +182,6 @@
     :host "api.cerebras.ai"
     :endpoint "/v1/chat/completions"
     :stream t
-    :key "csk-tp5c3dfp85dvpcyfphxn4tmdrwkhw24f39hv2v88p5vkhffy"
     :models '(qwen-3-235b-a22b-instruct-2507
               llama3.1-70b
               llama3.1-8b)))
